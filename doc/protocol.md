@@ -1,4 +1,5 @@
-# Beanstalkd
+###### This is the reference protocol of [Beanstalkd v1.9](https://github.com/kr/beanstalkd/blob/v1.9/doc/protocol.md), used to implement ChainMQ.
+---
 
 ## Protocol
 
@@ -30,7 +31,7 @@ Names only supports ASCII strings.
 | Errors              | Description   |
 | --------------------| ------------- |
 | `OUT_OF_MEMORY\r\n` | The server cannot allocate enough memory for the job. The client should try again later.|
-| `INTERNAL_ERROR\r\n` | This indicates a bug in the server. It should never happen. If it does happen, please report it at http://groups.google.com/group/beanstalk-talk. |
+| `INTERNAL_ERROR\r\n` | This indicates a bug in the server. It should never happen. If it does happen, please report it at https://github.com/ggrandes/chainmq/issues |
 | `BAD_FORMAT\r\n` | The client sent a command line that was not well-formed. This can happen if the line does not end with \r\n, if non-numeric characters occur where an integer is expected, if the wrong number of arguments are present, or if the command line is mal-formed in any other way. |
 | `UNKNOWN_COMMAND\r\n` | The client sent a command that the server does not know. |
 
