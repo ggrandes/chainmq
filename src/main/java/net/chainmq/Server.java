@@ -74,7 +74,7 @@ public class Server implements Runnable {
 			} else if (arg.equals("-l")) {
 				final String value = args[i + 1];
 				srv.setListenAddress(InetAddress.getByName(value));
-			} else if (arg.equals("-l")) {
+			} else if (arg.equals("-p")) {
 				final String value = args[i + 1];
 				srv.setListenPort(Integer.valueOf(value));
 			}
