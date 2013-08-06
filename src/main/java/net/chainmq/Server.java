@@ -72,10 +72,10 @@ public class Server implements Runnable {
 			if (arg.equals("-h")) {
 				showHelp();
 			} else if (arg.equals("-l")) {
-				final String value = args[i + 1];
+				final String value = args[++i];
 				srv.setListenAddress(InetAddress.getByName(value));
 			} else if (arg.equals("-p")) {
-				final String value = args[i + 1];
+				final String value = args[++i];
 				srv.setListenPort(Integer.valueOf(value));
 			}
 		}
