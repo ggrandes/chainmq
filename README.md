@@ -5,4 +5,10 @@ ChainMQ is a Message/Work Queue Server, wire-protocol compatible with Beanstalkd
 ### Currently in Development
 
 ---
+
+## Running
+
+    java -cp .:chainmq-x.y.z.jar net.chainmq.Server -l 0.0.0.0 -p 11300
+
+---
 Inspired in [Beanstalkd](http://kr.github.io/beanstalkd/), this code is Java-minimalistic version.
