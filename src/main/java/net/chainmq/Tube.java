@@ -254,7 +254,8 @@ public class Tube {
 		map.put("pause", Long.toString(delayed / 1000));
 		// map.put("cmd-delete", null);
 		// map.put("cmd-pause-tube", null);
-		map.put("pause-time-left", Long.toString(Math.max(0, (delayedUntil - System.currentTimeMillis())) / 1000));
+		map.put("pause-time-left",
+				Long.toString(Math.max(0, (delayedUntil - System.currentTimeMillis())) / 1000));
 		return map;
 	}
 
