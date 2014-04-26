@@ -373,7 +373,7 @@ public abstract class CommandHandler {
 			final long id = Utils.parseLong(tokens.get(1), Constants.MAX_INT_32BITS);
 			if (id < 0)
 				throw new HandlerException(Constants.ERROR_BAD_FORMAT);
-			final Job job = TubeMapper.getInstance().jobsGlobalByID.get(Long.valueOf(id));
+			final Job job = TubeMapper.getInstance().getJob(id);
 			// NOT_FOUND\r\n
 			if (job == null)
 				throw new HandlerException(Constants.ERROR_NOT_FOUND);
@@ -401,7 +401,7 @@ public abstract class CommandHandler {
 			final long delay = Utils.parseLong(tokens.get(3), Constants.MAX_INT_32BITS);
 			if ((id < 0) || (prio < 0) || (delay < 0))
 				throw new HandlerException(Constants.ERROR_BAD_FORMAT);
-			final Job job = TubeMapper.getInstance().jobsGlobalByID.get(Long.valueOf(id));
+			final Job job = TubeMapper.getInstance().getJob(id);
 			// NOT_FOUND\r\n
 			if (job == null)
 				throw new HandlerException(Constants.ERROR_NOT_FOUND);
@@ -428,7 +428,7 @@ public abstract class CommandHandler {
 			final long prio = Utils.parseLong(tokens.get(2), Constants.MAX_INT_32BITS);
 			if ((id < 0) || (prio < 0))
 				throw new HandlerException(Constants.ERROR_BAD_FORMAT);
-			final Job job = TubeMapper.getInstance().jobsGlobalByID.get(Long.valueOf(id));
+			final Job job = TubeMapper.getInstance().getJob(id);
 			// NOT_FOUND\r\n
 			if (job == null)
 				throw new HandlerException(Constants.ERROR_NOT_FOUND);
@@ -454,7 +454,7 @@ public abstract class CommandHandler {
 			final long id = Utils.parseLong(tokens.get(1), Constants.MAX_INT_32BITS);
 			if (id < 0)
 				throw new HandlerException(Constants.ERROR_BAD_FORMAT);
-			final Job job = TubeMapper.getInstance().jobsGlobalByID.get(Long.valueOf(id));
+			final Job job = TubeMapper.getInstance().getJob(id);
 			// NOT_FOUND\r\n
 			if (job == null)
 				throw new HandlerException(Constants.ERROR_NOT_FOUND);
@@ -633,7 +633,7 @@ public abstract class CommandHandler {
 			final long id = Utils.parseLong(tokens.get(1), Constants.MAX_INT_32BITS);
 			if (id < 0)
 				throw new HandlerException(Constants.ERROR_BAD_FORMAT);
-			final Job job = TubeMapper.getInstance().jobsGlobalByID.get(Long.valueOf(id));
+			final Job job = TubeMapper.getInstance().getJob(id);
 			// NOT_FOUND\r\n
 			if (job == null)
 				throw new HandlerException(Constants.ERROR_NOT_FOUND);

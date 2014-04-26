@@ -15,11 +15,11 @@
 package net.chainmq;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -27,12 +27,12 @@ import org.apache.log4j.Logger;
  * 
  * @author Guillermo Grandes / guillermo.grandes[at]gmail.com
  */
-public class TubeMapper implements Runnable {
+public class TubeMapper implements JobStorage, Runnable {
 	private static final Logger log = Logger.getLogger(Tube.class);
 	private static final TubeMapper singleton = new TubeMapper();
 	private final LinkedHashMap<String, Tube> tubes = new LinkedHashMap<String, Tube>();
-	final SequenceNumber seq = new SequenceNumber();
-	final Map<Long, Job> jobsGlobalByID = Collections.synchronizedMap(new HashMap<Long, Job>());
+	private final SequenceNumber seq = new SequenceNumber();
+	private final Map<Long, Job> jobsGlobalByID = new HashMap<Long, Job>();
 
 	static {
 		getInstance().getTubeOrCreate(Constants.DEFAULT_TUBE);
@@ -49,7 +49,7 @@ public class TubeMapper implements Runnable {
 	public synchronized Tube getTubeOrCreate(final String name) {
 		Tube tube = tubes.get(name);
 		if (tube == null) {
-			tube = new Tube(seq, jobsGlobalByID, name);
+			tube = new Tube(seq, this, name);
 			tubes.put(name, tube);
 		}
 		return tube;
@@ -61,6 +61,26 @@ public class TubeMapper implements Runnable {
 
 	public synchronized List<String> getTubeList() {
 		return new ArrayList<String>(tubes.keySet());
+	}
+
+	@Override
+	public synchronized void putJob(final long id, final Job job) {
+		jobsGlobalByID.put(Long.valueOf(id), job);
+	}
+
+	@Override
+	public synchronized Job getJob(final long id) {
+		return jobsGlobalByID.get(Long.valueOf(id));
+	}
+
+	@Override
+	public synchronized void removeJob(final long id) {
+		jobsGlobalByID.remove(Long.valueOf(id));
+	}
+
+	@Override
+	public synchronized int totalJobs() {
+		return jobsGlobalByID.size();
 	}
 
 	@Override

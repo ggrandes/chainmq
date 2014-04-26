@@ -33,7 +33,7 @@ public class Tube {
 	private static final Logger log = Logger.getLogger(Tube.class);
 	final SequenceNumber seq;
 	final String name;
-	final Map<Long, Job> jobsByID;
+	final JobStorage jobsByID;
 	final TreeSet<Job> jobsByPrio = new TreeSet<Job>(Job.priorityComparator);
 	final TreeSet<Job> jobsBySched = new TreeSet<Job>(Job.readyTimeComparator);
 	final LinkedHashSet<Job> jobsBuried = new LinkedHashSet<Job>();
@@ -42,7 +42,7 @@ public class Tube {
 	long delayed = 0;
 	long delayedUntil = 0;
 
-	public Tube(final SequenceNumber seq, final Map<Long, Job> jobsGlobalByID, final String name) {
+	public Tube(final SequenceNumber seq, final JobStorage jobsGlobalByID, final String name) {
 		this.seq = seq;
 		this.jobsByID = jobsGlobalByID;
 		this.name = name;
@@ -58,7 +58,7 @@ public class Tube {
 	}
 
 	public synchronized Job peek(final long id) {
-		return jobsByID.get(Long.valueOf(id));
+		return jobsByID.getJob(id);
 	}
 
 	public synchronized Job get() {
@@ -197,11 +197,11 @@ public class Tube {
 	}
 
 	public synchronized void addJob(final Job job) {
-		jobsByID.put(Long.valueOf(job.id), job);
+		jobsByID.putJob(job.id, job);
 	}
 
 	public synchronized void removeJob(final Job job) {
-		jobsByID.remove(Long.valueOf(job.id));
+		jobsByID.removeJob(job.id);
 	}
 
 	public synchronized void addReady(final Job job) {
@@ -246,7 +246,7 @@ public class Tube {
 		map.put("current-jobs-reserved", Integer.toString(jobsReserved.size()));
 		map.put("current-jobs-delayed", Integer.toString(jobsBySched.size()));
 		map.put("current-jobs-buried", Integer.toString(jobsBuried.size()));
-		map.put("total-jobs", Integer.toString(jobsByID.size()));
+		map.put("total-jobs", Integer.toString(jobsByID.totalJobs()));
 		// TODO
 		// map.put("current-using", null);
 		// map.put("current-waiting", null);
