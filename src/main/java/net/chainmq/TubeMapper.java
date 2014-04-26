@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -32,7 +31,7 @@ public class TubeMapper implements JobStorage, Runnable {
 	private static final TubeMapper singleton = new TubeMapper();
 	private final LinkedHashMap<String, Tube> tubes = new LinkedHashMap<String, Tube>();
 	private final SequenceNumber seq = new SequenceNumber();
-	private final Map<Long, Job> jobsGlobalByID = new HashMap<Long, Job>();
+	private final HashMap<Long, Job> jobsGlobalByID = new HashMap<Long, Job>();
 
 	static {
 		getInstance().getTubeOrCreate(Constants.DEFAULT_TUBE);
