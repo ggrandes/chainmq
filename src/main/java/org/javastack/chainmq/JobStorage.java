@@ -1,4 +1,4 @@
-package net.chainmq;
+package org.javastack.chainmq;
 
 /**
  * Interface for Job Storage

@@ -12,7 +12,7 @@
  *  limitations under the License.
  *
  */
-package net.chainmq;
+package org.javastack.chainmq;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;

@@ -12,7 +12,7 @@
  *  limitations under the License.
  *
  */
-package net.chainmq;
+package org.javastack.chainmq;
 
 import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
