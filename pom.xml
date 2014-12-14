@@ -4,7 +4,7 @@
 
 	<groupId>org.javastack</groupId>
 	<artifactId>chainmq</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<dependencies>
 		<dependency>
@@ -16,13 +16,6 @@
 	</dependencies>
 
 	<build>
-		<extensions>
-			<extension>
-				<groupId>org.springframework.build</groupId>
-				<artifactId>aws-maven</artifactId>
-				<version>4.4.0.RELEASE</version>
-			</extension>
-		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -38,52 +31,82 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<forceCreation>true</forceCreation>
+					<archive>
+						<manifestEntries>
+							<Built-By>maven</Built-By>
+						</manifestEntries>
+					</archive>
 					<excludes>
 						<exclude>**/log4j.properties</exclude>
 						<exclude>**/sandbox/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
-			<!-- Package source in a JAR -->
+			<!-- Package source to JAR to upload to repo -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.0.4</version>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>jar</goal>
 						</goals>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Built-By>maven</Built-By>
+								</manifestEntries>
+							</archive>
+							<excludeResources>true</excludeResources>
+							<excludes>
+								<exclude>**/sandbox/*</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Generate JavaDocs -->
+			<!-- Package ZIP to upload to repo -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.3</version>
+				<configuration>
+					<descriptor>assembly/package.xml</descriptor>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+				</configuration>
 				<executions>
 					<execution>
-						<id>attach-javadocs</id>
+						<phase>package</phase>
 						<goals>
-							<goal>jar</goal>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
+		<!-- Deployment Maven-S3 -->
+		<extensions>
+			<extension>
+				<groupId>org.springframework.build</groupId>
+				<artifactId>aws-maven</artifactId>
+				<version>4.4.0.RELEASE</version>
+			</extension>
+		</extensions>
 	</build>
 
 	<!-- Deployment -->
 	<distributionManagement>
 		<repository>
-			<id>maven-s3-release-repo</id>
 			<name>S3 Release Repository</name>
+			<id>maven-s3-release-repo</id>
 			<url>s3://maven-release/release</url>
 		</repository>
 		<snapshotRepository>
-			<id>maven-s3-snapshot-repo</id>
 			<name>S3 Snapshot Repository</name>
+			<id>maven-s3-snapshot-repo</id>
 			<url>s3://maven-snapshot/snapshot</url>
 		</snapshotRepository>
 	</distributionManagement>

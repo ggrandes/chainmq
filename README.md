@@ -2,13 +2,13 @@
 
 ChainMQ is a Message/Work Queue Server, wire-protocol compatible with Beanstalkd. Open Source Java project under Apache License v2.0
 
-### Currently in Development
+### Current Stable Version is [1.0.0](https://maven-release.s3.amazonaws.com/release/org/javastack/chainmq/1.0.0./chainmq-1.0.0-bin.zip)
 
 ---
 
-## Running
+## Running (Linux)
 
-    java -cp .:chainmq-x.y.z.jar org.javastack.chainmq.Server -l 0.0.0.0 -p 11300
+    ./bin/chainmq.sh <start|stop|restart|status>
 
 ---
 Inspired in [Beanstalkd](http://kr.github.io/beanstalkd/), this code is Java-minimalistic version.
