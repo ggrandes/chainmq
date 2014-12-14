@@ -14,25 +14,26 @@ ChainMQ is a Message/Work Queue Server, wire-protocol compatible with [Beanstalk
 
 #### Usage Example
 
-Here is an example in Ruby, see the [client libraries](https://github.com/kr/beanstalkd/wiki/client-libraries) to find your favorite language.
+Here is an example in Perl, see the [client libraries](https://github.com/kr/beanstalkd/wiki/client-libraries) to find your favorite language.
 
 First, have one process put a job into the queue:
 
-```ruby
-beanstalk = Beanstalk::Pool.new(['127.0.0.1:11300'])
-beanstalk.put('hello')
+```perl
+my $client = Beanstalk::Client->new({ server => "localhost:11300" });
+$client->put({ data => "hello" });
 ```
 
 Then start another process to take jobs out of the queue and run them:
 
-```ruby
-beanstalk = Beanstalk::Pool.new(['127.0.0.1:11300'])
-loop do
-  job = beanstalk.reserve
-  puts job.body # prints "hello"
-  job.delete
-end
+```perl
+my $client = Beanstalk::Client->new({ server => "localhost:11300" });
+while (1) {
+    my $job = $client->reserve();
+    print $job->data(), "\n"; # prints "hello"
+    $job->delete();
+}
 ```
+
 
 #### Wire Protocol
 
