@@ -1,5 +1,21 @@
+# Binary/Package Files #
 bin
 target
-sandbox
+*.class
+*.jar
+*.war
+*.ear
+# Eclipse #
 .metadata
-src/main/resources/*.properties
+.settings
+.classpath
+.project
+# IntelliJ #
+.idea
+*.iml
+# Configuration never packaged
+log4j*.properties
+log4j*.xml
+#
+# Custom
+sandbox
